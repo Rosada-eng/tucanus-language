@@ -8,7 +8,7 @@ Uma linguagem tipicamente brasileira, com uma sintaxe simples e fácil de aprend
 
 ## Visão Geral
 
-A `<b>` EBNF `</b>` (Extended Backus-Naur Form) é uma notação usada para descrever a sintaxe de uma linguagem de programação, ou seja, as regras para escrever instruções ou expressões nessa linguagem. A seguir, uma explicação dos símbolos e construções usados nessa EBNF:
+A **EBNF** (Extended Backus-Naur Form) é uma notação usada para descrever a sintaxe de uma linguagem de programação, ou seja, as regras para escrever instruções ou expressões nessa linguagem. A seguir, uma explicação dos símbolos e construções usados nessa EBNF:
 
 - **λ** representa a produção vazia, ou seja, uma construção que não gera nenhum símbolo terminal ou não-terminal.
 - **|** representa uma escolha entre as opções à esquerda e à direita. Por exemplo, **IDENTIFIER** | **VAR_DECLARATION** indica que um **VAR_ASSIGNMENT** pode ser um identificador seguido de um sinal de igual ou uma declaração de variável seguida de um sinal de igual.
