@@ -41,22 +41,13 @@ Algumas definições das construções específicas usadas na EBNF abaixo:
 
 INPUT = STATEMENT, { STATEMENT, [{NEWLINE}] } ;
 
-
 VAR_ASSIGNMENT =  (IDENTIFIER | VAR_DECLARATION ), "=", EXPRESSION ;
 VAR_DECLARATION = "declare", IDENTIFIER;
 
 FUNCTION_DECLARATION = "defina", IDENTIFIER, "(", PARAMETER_LIST, ")", FUNCTION_BLOCK ;
 
 
-FUNCTION_CALL = IDENTIFIER, "(",
-    (    λ
-        | PARAMETER_LIST
-    ),
-")";
-
-
-
-
+FUNCTION_CALL = IDENTIFIER, "(", (λ |PARAMETER_LIST ), ")";
 
 STATEMENT = (     λ
                 | VAR_DECLARATION
@@ -96,8 +87,6 @@ UN_OP = ("+" | "-" | "!");
 
 LOG_OP = ("||" | "&&");
 
-
-
 IDENTIFIER = LETTER { LETTER | DIGIT | "_" } ;
 
 LITERAL = ("'" | '"'), { LETTER | DIGIT | "_" | " " }, ("'" | '"' ) ;
@@ -110,6 +99,5 @@ LETTER = ( a | ... | z | A | ... | Z ) ;
 
 DIGIT = ( 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 0 ) ;
 
-END_DECLARATION = "}";
 
 ```
