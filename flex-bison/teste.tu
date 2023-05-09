@@ -44,8 +44,11 @@ funcao (x, y)
 
 defina funcao_muito_louca123(x, 123, "abc") {
     imprima("faz algo muito louco")
+
+    retorne 123, "abc", x
 }
 
 funcao_muito_louca123(aueieie, 24, "abc")
 
-"tudo azul"
+
+"tudo azul -- PARSING VÁLIDO"

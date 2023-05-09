@@ -3,7 +3,7 @@
 Para executar o analisador, basta rodar o programa `analyzer` utilizando o arquivo `teste.py` como entrada ou qualquer outra sequência de códigos.
 
 ```
-./analyser < teste.py
+./analyser < teste.tu
 ```
 
 Para compilar novamente o executável, basta utilizar o comando abaixo
