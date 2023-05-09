@@ -63,7 +63,7 @@ VAR_DECLARATION:
 ;
 
 FUNCTION_DECLARATION:
-    DEF IDENTIFIER OPEN_PAREN PARAMETER_LIST CLOSE_PAREN BLOCK
+    DEF IDENTIFIER OPEN_PAREN PARAMETER_LIST CLOSE_PAREN FUNCTION_BLOCK
 ;
 
 FUNCTION_CALL:
@@ -71,12 +71,19 @@ FUNCTION_CALL:
 ;
 
 PARAMETER_LIST:
-    FACTOR
+    
+    | FACTOR
     | PARAMETER_LIST COMMA PARAMETER_LIST
 
 BLOCK:
     OPEN_BRACK input CLOSE_BRACK
 ;
+
+FUNCTION_BLOCK:
+    OPEN_BRACK input RETURN PARAMETER_LIST NEWLINE CLOSE_BRACK
+    | OPEN_BRACK input CLOSE_BRACK
+;
+
 LOOP_BLOCK:
     WHILE OPEN_PAREN CONDITION_EVALUATION CLOSE_PAREN BLOCK
 
@@ -132,6 +139,7 @@ FACTOR:
     | UN_OP FACTOR
     | LITERAL
     | OPEN_PAREN EXPRESSION CLOSE_PAREN
+    | NEWLINE
 ;
 
 UN_OP:
@@ -149,9 +157,8 @@ LOG_OP:
 
 int main() {
     yyparse();
-    printf("\n\n ======================================= \n\n");
-    printf("\t Sintáxe correta!\t ");
-    printf("\n\n ======================================= \n\n");
+
+
     return 0;
 }
 

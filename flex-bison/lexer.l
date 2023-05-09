@@ -24,7 +24,7 @@
 
 "declare" 	{printf("declare: %s\n",yytext); count++; return VAR;}
 
-"retornar" 	{printf("retornar: %s\n",yytext); count++; return RETURN;}
+"retorne" 	{printf("retorne: %s\n",yytext); count++; return RETURN;}
 
 
 ["].+["]		{printf("String: %s\n",yytext); count++; return LITERAL; }
