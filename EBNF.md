@@ -35,72 +35,74 @@ Algumas definições das construções específicas usadas na EBNF abaixo:
 ## EBNF
 
 ```
+
+
 -> ENBF: Tucanus
+
+INPUT = STATEMENT, { STATEMENT, [{NEWLINE}] } ;
+
 
 VAR_ASSIGNMENT =  (IDENTIFIER | VAR_DECLARATION ), "=", EXPRESSION ;
 VAR_DECLARATION = "declare", IDENTIFIER;
 
-FUNCTION_BLOCK = (FUNCTION_DECLARATION, BLOCK, END_DECLARATION) ;
-FUNCTION_DECLARATION = "defina", IDENTIFIER, "(", PARAMETER_LIST, ")", "{"  ;
+FUNCTION_DECLARATION = "defina", IDENTIFIER, "(", PARAMETER_LIST, ")", FUNCTION_BLOCK ;
 
-PARAMETER_LIST = ( λ | IDENTIFIER, { ",", IDENTIFIER } ) ;
 
 FUNCTION_CALL = IDENTIFIER, "(",
     (    λ
-        | EXPRESSION
-        | TEXT_EXPRESSION
-        | (IDENTIFIER | NUMBER | LITERAL), { ",", (IDENTIFIER | NUMBER | LITERAL) }
+        | PARAMETER_LIST
     ),
 ")";
 
-CODITIONAL_BLOCK = (
-    CONDITIONAL_DECLARATION, BLOCK, END_DECLARATION,
-    [{( SUBCONDITIONAL_DECLARATION,  BLOCK, END_DECLARATION )}],
-    [( WILDCARD_CONDITIONAL_DECLARATION,  BLOCK, END_DECLARATION )]
-)
-
-CONDITIONAL_DECLARATION = "se", "(", EVALUATION_CONDITION, ")", "{" ;
-SUBCONDITIONAL_DECLARATION = "ainda se", "(", EVALUATION_CONDITION, ")", "{" ;
-WILDCARD_CONDITIONAL_DECLARATION = "senao", "{" ;
 
 
-LOOP_BLOCK = (LOOP_STATEMENT, BLOCK, END_DECLARATION) ;
-LOOP_STATEMENT = "enquanto for", "(", EVALUATION_CONDITION, ")", "{";
 
-
-EVALUATION_CONDITION = EVALUATION_EXPRESS, [{("||" | "&&") EVALUATION_EXPRESS}] ;
-
-EVALUATION_EXPRESS = (EXPRESSION | IDENTIFIER), EVALUATION_SYMBOL , (EXPRESSION | IDENTIFIER) ;
-
-EVALUATION_SYMBOL = ( ">" | "<" | ">=" | "<=" | "==" | "!=" )
-
-
-BLOCK = { STATEMENT } ;
 
 STATEMENT = (     λ
                 | VAR_DECLARATION
                 | VAR_ASSIGNMENT
-                | EXPRESSION
+                | REL_EXPRESSION
                 | FUNCTION_DECLARATION
                 | FUNCTION_CALL
-                | CONDITIONAL_DECLARATION
-                | SUBCONDITIONAL_DECLARATION
-                | WILDCARD_CONDITIONAL_DECLARATION
-                | END_DECLARATION
+                | CONDITIONAL_BLOCK
+                | LOOP_BLOCK
             ), "\n";
 
+BLOCK = "{", { STATEMENT, [{NEWLINE}] }, "}" ;
 
-TEXT_EXPRESSION = (IDENTIFIER | LITERAL), { "+", (IDENTIFIER | LITERAL)} ;
+FUNCTION_BLOCK = "{" , { STATEMENT, [{NEWLINE}] }, ["retorne", [PARAMETER_LIST]] , "}" ;
 
-EXPRESSION = TERM, { ("+" | "-"), TERM } ;
+PARAMETER_LIST = ( λ | FACTOR, { ",", FACTOR } ) ;
 
-TERM = FACTOR, { ("*" | "/"), FACTOR } ;
+LOOP_BLOCK = "enquanto for", "(", CONDITION_EVALUATION, ")", BLOCK;
 
-FACTOR = (("+" | "-"), FACTOR) | NUMBER | "(", EXPRESSION, ")" | IDENTIFIER ;
+CONDITIONAL_BLOCK = "se", "(", CONDITION_EVALUATION, ")", BLOCK [{( "ainda se", "(", CONDITION_EVALUATION, ")", BLOCK )}] [{( "senao", BLOCK )}];
+
+CONDITION_EVALUATION = EVALUATION_EXPRESSION [{LOG_OP, EVALUATION_EXPRESSION}]
+
+EVALUATION_EXPRESSION = ["!"] REL_EXPRESSION ;
+
+REL_EXPRESSION = [{"("}] , EXPRESSION, (EVALUATION_SYMBOL | LOG_OP), EXPRESSION, [{")"}] ; 
+
+EVALUATION_SYMBOL = ( ">" | "<" | ">=" | "<=" | "==" | "!=" )
+
+EXPRESSION = TERM, { ("+" | "-" | "||"), TERM } ;
+
+TERM = FACTOR, { ("*" | "/" | "&&"), FACTOR } ;
+
+FACTOR = (("+" | "-"), FACTOR) | NUMBER | "(", EXPRESSION, ")" | IDENTIFIER | LITERAL | "\n";
+
+UN_OP = ("+" | "-" | "!");
+
+LOG_OP = ("||" | "&&");
+
+
 
 IDENTIFIER = LETTER { LETTER | DIGIT | "_" } ;
 
 LITERAL = ("'" | '"'), { LETTER | DIGIT | "_" | " " }, ("'" | '"' ) ;
+
+WORD = LETTER, { LETTER } ;
 
 NUMBER = DIGIT, { DIGIT } ;
 
