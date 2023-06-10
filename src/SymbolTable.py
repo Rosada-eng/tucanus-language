@@ -4,7 +4,7 @@ class SymbolTable:
 
     def __init__(self):
         """
-            Creates an object which will store data as
+            Creates an object which will store variables as
             key: 'identifier'
             value: value
         """
