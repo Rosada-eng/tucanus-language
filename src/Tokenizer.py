@@ -181,7 +181,7 @@ class Tokenizer:
                 raise SyntaxError("String não fechada")
 
         self.position += 1
-        return Token("STRING", string)
+        return Token("LITERAL", string)
 
     def selectNext(self) -> None:
         try: 
