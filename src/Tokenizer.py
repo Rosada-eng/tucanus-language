@@ -191,15 +191,13 @@ class Tokenizer:
                 self.skip_whitespace()
                 c = self.source[self.position]
 
-            
-
             if c.isdigit():
                 self.next = self.get_int_token(c)
 
-            elif re.match(r"[a-zA-Z]", c):
+            elif re.match(r"[a-zA-Z_]", c):
                 self.next = self.get_vars_token(c)
 
-            elif c in ["+", "-", "!", "*", "/", ".", "(", ")", "=", "<", ">", "|", "&", ":"]:
+            elif c in ["+", "-", "!", "*", "/", ".", "(", ")", "=", "<", ">", "|", "&"]:
                 self.next = self.get_operators_token(c)
 
             elif c == '"':
