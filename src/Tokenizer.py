@@ -91,8 +91,14 @@ class Tokenizer:
             return Token("MINUS",)
 
         elif c == "!":
-            self.position += 1
-            return Token("NOT",)
+            
+            if c + self.source[self.position +1] == "!=":
+                self.position += 2
+                return Token("NOT_EQUALS",) # !=
+            
+            else:
+                self.position += 1
+                return Token("NOT",) # ! 
         
         elif c == "*":
             self.position += 1
@@ -135,12 +141,26 @@ class Tokenizer:
                 return Token("ASSIGNMENT",) # = 
 
         elif c == "<":
-            self.position += 1
-            return Token("LESSER_THAN",)
+
+            if c + self.source[self.position +1]== "<=":
+                self.position += 2
+                return Token("LESSER_THAN_OR_EQUALS_TO",) # <=
+            
+            else:
+                self.position += 1
+                return Token("LESSER_THAN",) # <
+            
 
         elif c == ">":
-            self.position += 1
-            return Token("GREATER_THAN",)
+            
+            if c + self.source[self.position +1] == ">=":
+                self.position += 2
+                return Token("GREATER_THAN_OR_EQUALS_TO",) # >=
+            
+            else:
+                self.position += 1
+                return Token("GREATER_THAN",) # >
+            
 
         elif c == "|":
             self.position += 1
@@ -224,7 +244,7 @@ class Tokenizer:
             
             else:
                 raise ValueError(f"Caractere inválido: {c} em pos: {self.position}")
-            
+            # DEBUG -- descomente abaixo
             print("next: ", self.next)
             return self.next
            
@@ -244,7 +264,8 @@ if __name__ == "__main__":
     # tokenizer.selectNext()
 
     tokens = tokenizer.get_all_tokens()
-    print(tokens)
+    #DEBUG -- descomente abaixo
+    # print(tokens)
     # while tokenizer.next and tokenizer.next.value != "EOF":
     #     tokenizer.selectNext()
         # print(tokenizer.next)

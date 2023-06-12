@@ -31,10 +31,16 @@ class BinOp(Node):
     def evaluate_logic(self, op_type:str, child1_value: int, child2_value: int) -> int:
         if op_type == "LESSER_THAN":
             result = child1_value < child2_value
+        elif op_type == "LESSER_THAN_OR_EQUALS_TO":
+            result = child1_value <= child2_value
         elif op_type == "GREATER_THAN":
             result = child1_value > child2_value
+        elif op_type == "GREATER_THAN_OR_EQUALS_TO":
+            result = child1_value >= child2_value
         elif op_type == "EQUALS":
             result = child1_value == child2_value
+        elif op_type == "NOT_EQUALS":
+            result = child1_value != child2_value
         
         elif op_type == "AND":
             result = child1_value and child2_value
@@ -58,7 +64,16 @@ class BinOp(Node):
             return self.evaluate_arithmetic(self.value, child1_value, child2_value)
         
         # OPERAÇÕES LÓGICAS
-        elif self.value in ["LESSER_THAN", "GREATER_THAN", "EQUALS", "AND", "OR"]:
+        elif self.value in [
+            "EQUALS",
+            "NOT_EQUALS",
+            "GREATER_THAN",
+            "GREATER_THAN_OR_EQUALS_TO",
+            "LESSER_THAN",
+            "LESSER_THAN_OR_EQUALS_TO",
+            "AND",
+            "OR"
+        ]:
             return self.evaluate_logic(self.value, child1_value, child2_value)
 
         # OPERAÇÕES COM STRING

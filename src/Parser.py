@@ -36,6 +36,7 @@ class Parser:
             last_tree = StringVal(Parser.tokenizer.next.value)
             Parser.tokenizer.selectNext()
 
+        # FuncCall
         elif Parser.tokenizer.next.type == "IDEN":
             identifier = Identifier(Parser.tokenizer.next.value)
             Parser.tokenizer.selectNext()
@@ -52,7 +53,6 @@ class Parser:
                     args.append(arg)
 
                 last_tree = FuncCall(identifier.key, args)
-
                 Parser.tokenizer.selectNext()
                 
             else:
@@ -154,12 +154,19 @@ class Parser:
     @staticmethod
     def parseRelativeExpression() -> Node:
         """
-            Parseia Operações de Relação (==, > ou <)
+            Parseia Operações de Relação Lógica (==, !=, >, >=, < ou <=)
         """
 
         last_tree = Parser.parseExpression()
 
-        while Parser.tokenizer.next.type in ["EQUALS", "GREATER_THAN", "LESSER_THAN"]:
+        while Parser.tokenizer.next.type in [
+            "EQUALS",
+            "NOT_EQUALS",
+            "GREATER_THAN",
+            "GREATER_THAN_OR_EQUALS_TO",
+            "LESSER_THAN",
+            "LESSER_THAN_OR_EQUALS_TO"
+            ]:
             op = Parser.tokenizer.next.type
 
             Parser.tokenizer.selectNext()
@@ -212,10 +219,10 @@ class Parser:
 
                 statement_tree = FuncCall(identifier_node.key, args)
 
+                Parser.tokenizer.selectNext()
             else:
                 raise ValueError(f"Token inválido {Parser.tokenizer.next}. " + "Deveria ser {=, ou ( }")
             
-
             if Parser.tokenizer.next.type != "NEWLINE":
                 raise ValueError(f"Token inválido {Parser.tokenizer.next}. Deveria ser um \\n na posição {Parser.tokenizer.position}")
             
@@ -228,18 +235,17 @@ class Parser:
             identifier_node = Identifier(Parser.tokenizer.next.value)
 
             Parser.tokenizer.selectNext()
-            if Parser.tokenizer.next.type != "ASSIGNMENT":
-                raise ValueError(f"Token inválido {Parser.tokenizer.next}. Deveria ser um = na posição {Parser.tokenizer.position}")
+            expression_node = None
+            if Parser.tokenizer.next.type == "ASSIGNMENT":
             
-            Parser.tokenizer.selectNext()
-            expression_node = Parser.parseRelativeExpression()
+                Parser.tokenizer.selectNext()
+                expression_node = Parser.parseRelativeExpression()
 
             statement_tree = VarDec(identifier_node, expression_node)
 
             if Parser.tokenizer.next.type != "NEWLINE":
                 raise ValueError(f"Token inválido {Parser.tokenizer.next}. Deveria ser um \\n na posição {Parser.tokenizer.position}")
             
-
         elif Parser.tokenizer.next.type == "RETURN":
             Parser.tokenizer.selectNext()
 
@@ -438,7 +444,6 @@ class Parser:
             if Parser.tokenizer.next.type != "NEWLINE":
                 raise ValueError(f"Token inválido {Parser.tokenizer.next}. Deveria ser um \\n na posição {Parser.tokenizer.position}")
 
-
             Parser.tokenizer.selectNext()
             body_block = Block()
             while Parser.tokenizer.next.type != "CLOSE_BRACK":
@@ -488,8 +493,8 @@ class Parser:
         Parser.tokenizer = Tokenizer(code)        
         Parser.tokenizer.selectNext()
 
-        x = Parser.parseBlock()
-        print(x.evaluate(SymbolTable()))
+        ebnf_tree = Parser.parseBlock()
+        ebnf_tree.evaluate(SymbolTable())
 
 
 if __name__ == "__main__":
