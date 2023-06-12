@@ -31,7 +31,7 @@ def test_parse_string():
     assert node.evaluate(SymbolTable()) == "Hello, World!"
 
 def test_var_parser(capsys):
-    raw_code = "x=3\n imprima(x)\n"
+    raw_code = "declare x=3\n imprima(x)\n"
 
     Parser.run(raw_code)
 
@@ -68,7 +68,7 @@ def test_parse_unop():
         assert node.evaluate(SymbolTable()) == expected
 
 def test_parse_rel_exp(capsys):
-    raw_code = "x= 3* (2+1) * 3\n imprima(x)\n"
+    raw_code = "declare x= 3* (2+1) * 3\n imprima(x)\n"
 
     Parser.run(raw_code)
 
