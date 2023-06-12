@@ -5,4 +5,4 @@ enquanto for (i < 10) {
 }
 
 imprima("Acabou!")
-imprima(i) 
+imprima(i) # output: 10

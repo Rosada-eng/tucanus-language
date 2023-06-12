@@ -1,14 +1,11 @@
 
 defina eh_par(x) {
-    declare v = x / 2
-    declare ultima_div = v
 
-    enquanto for (v != 0) {
-        ultima_div = v
-        v = v / 2
+    enquanto for (x >= 2) {
+        x = x-2
     }
 
-    se (ultima_div == 1) {
+    se (x == 0) {
         imprima("É par!")
         retorne 1
     } senao {
