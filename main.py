@@ -6,7 +6,7 @@ if __name__ == "__main__":
         input_file = sys.argv[1]
 
     except IndexError:
-        input_file = "./teste.jl"
+        input_file = "./teste.tu"
 
     finally:
         with open (input_file, "r") as f:
