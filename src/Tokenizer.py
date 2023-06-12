@@ -245,7 +245,7 @@ class Tokenizer:
             else:
                 raise ValueError(f"Caractere inválido: {c} em pos: {self.position}")
             # DEBUG -- descomente abaixo
-            print("next: ", self.next)
+            # print("next: ", self.next)
             return self.next
            
         except IndexError:
