@@ -28,6 +28,6 @@ class SymbolTable:
 
     def set(self, key :str, value :any):
         if key not in self.table:
-            self.create(key)
-
+            raise Exception(f"Key {key} not found")
+        
         self.table[key] = value
