@@ -1,7 +1,6 @@
 
 
 from .Block import Block
-from .VarDec import VarDec
 from .Identifier import Identifier
 from .Node import Node
 from src.FuncTable import FuncTable
@@ -23,7 +22,7 @@ class FuncDec(Node):
         
 
     def __str__(self) -> str:
-        args = ", ".join([f"{v.identifier.key}" for v in self.args_dec]) 
+        args = ", ".join([f"{v.key}" for v in self.args_dec]) 
         return f"FuncDec( function {self.identifier.key}({args}))"
     
 

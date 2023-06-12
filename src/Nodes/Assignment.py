@@ -17,6 +17,5 @@ class Assignment(Node):
         return f"Assignment({self.identifier}, {self.expression})"
 
     def evaluate(self, symbol_table:SymbolTable) -> None:
-
         # Obs.: Type checking is done in the SymbolTable        
         symbol_table.set(self.identifier.key, self.expression.evaluate(symbol_table))

@@ -1,7 +1,6 @@
 
 
 from .Block import Block
-from .VarDec import VarDec
 from .Identifier import Identifier
 from .Node import Node
 from src.FuncTable import FuncTable
@@ -30,11 +29,11 @@ class FuncCall(Node):
         
         func_table = SymbolTable()
         for arg_dec in func_dec.args_dec:
-            func_table.create(arg_dec.identifier.key, arg_dec.type)
+            func_table.create(arg_dec.key)
 
         for i in range(len(func_dec.args_dec)):
             arg = self.children[i]
 
-            func_table.set(func_dec.args_dec[i].identifier.key, arg.evaluate(symbol_table))
+            func_table.set(func_dec.args_dec[i].key, arg.evaluate(symbol_table))
 
         return func_dec.body_block.evaluate(func_table) 
