@@ -114,6 +114,14 @@ class Tokenizer:
             self.position += 1
             return Token("CLOSE_PAREN",)       
 
+        elif c == "{":
+            self.position += 1
+            return Token("OPEN_BRACK",)
+
+        elif c == r"}":
+            self.position += 1
+            return Token("CLOSE_BRACK",)       
+
         elif c == "=":
             self.position += 1
 
@@ -197,7 +205,7 @@ class Tokenizer:
             elif re.match(r"[a-zA-Z_]", c):
                 self.next = self.get_vars_token(c)
 
-            elif c in ["+", "-", "!", "*", "/", ".", "(", ")", "=", "<", ">", "|", "&"]:
+            elif c in ["+", "-", "!", "*", "/", ".", "(", ")", "{", "}",  "=", "<", ">", "|", "&"]:
                 self.next = self.get_operators_token(c)
 
             elif c == '"':
